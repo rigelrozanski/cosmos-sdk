@@ -141,26 +141,3 @@ func (k Keeper) AllocateTokensToValidator(ctx sdk.Context, val stakingtypes.Vali
 	outstanding.Rewards = outstanding.Rewards.Add(tokens...)
 	k.SetValidatorOutstandingRewards(ctx, val.GetOperator(), outstanding)
 }
-
-type providerPoolEntry struct {
-	operator sdk.ValAddress
-	tokens   sdk.DecCoins
-}
-
-type providerPool struct {
-	poolName             string
-	totalTokensInEntries sdk.DecCoins // account total tokens for if an entry needs to be redistributed
-	entries              []providerPoolEntry
-}
-
-// Teturn a validator-allocation function where the tokens are allocated
-// to a pool. This pool is intended to be used in conjunction with IBC
-// to pass rewards on to a provider chain.
-func (k Keeper) AllocateTokensToValidatorInPool(
-	ctx sdk.Context, val stakingtypes.ValidatorI,
-	tokens sdk.DecCoins, pool providerPool) FnAllocateForVal {
-
-	return func(ctx sdk.Context, val stakingtypes.ValidatorI, tokens sdk.DecCoins) {
-
-	}
-}
