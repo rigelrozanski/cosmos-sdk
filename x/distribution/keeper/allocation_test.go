@@ -97,7 +97,7 @@ func TestAllocateTokensToManyValidators(t *testing.T) {
 			SignedLastBlock: true,
 		},
 	}
-	app.DistrKeeper.AllocateTokens(ctx, 200, 200, valConsAddr2, votes)
+	app.DistrKeeper.AllocateTokens(ctx, app.DistrKeeper.AllocateTokensToValidator, 200, 200, valConsAddr2, votes)
 
 	// 98 outstanding rewards (100 less 2 to community pool)
 	require.Equal(t, sdk.DecCoins{{Denom: sdk.DefaultBondDenom, Amount: sdk.NewDecWithPrec(465, 1)}}, app.DistrKeeper.GetValidatorOutstandingRewards(ctx, valAddrs[0]).Rewards)
@@ -181,7 +181,7 @@ func TestAllocateTokensTruncation(t *testing.T) {
 			SignedLastBlock: true,
 		},
 	}
-	app.DistrKeeper.AllocateTokens(ctx, 31, 31, sdk.ConsAddress(valConsPk2.Address()), votes)
+	app.DistrKeeper.AllocateTokens(ctx, app.DistrKeeper.AllocateTokensToValidator, 31, 31, sdk.ConsAddress(valConsPk2.Address()), votes)
 
 	require.True(t, app.DistrKeeper.GetValidatorOutstandingRewards(ctx, valAddrs[0]).Rewards.IsValid())
 	require.True(t, app.DistrKeeper.GetValidatorOutstandingRewards(ctx, valAddrs[1]).Rewards.IsValid())
